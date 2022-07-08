@@ -1,0 +1,15 @@
+#!/bin/sh
+
+usage() { 
+    echo "Usage: $0 GITHUB_REPO REL_NAME_CONTAINS TAR_OPTS;" 1>&2;
+    echo "\te.g $0 helmfile/helmfile "linux-amd64" \"-z helmfile\" " 1>&2;
+    exit 1;
+}
+
+if [ ! $# -eq 3 ]; then 
+    usage
+fi
+
+TARBALL=$(curl -Ls https://api.github.com/repos/$1/releases| jq -r '.[].assets[] | select( .name | contains("'$2'") ) | ."browser_download_url"')
+
+curl -Ls $TARBALL | tar -C ~/bin -xvf - $3

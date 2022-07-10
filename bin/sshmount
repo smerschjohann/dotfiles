@@ -1,0 +1,7 @@
+#!/bin/bash
+
+remote=$(grep -P "^Host ([^*]+)$" $HOME/.ssh/config | sed 's/Host //' | sort -ru | fzf )
+remote_dir=$HOME/remotes/$remote
+echo mount $remote to $remote_dir
+mkdir -p $remote_dir
+sshfs -o allow_other $remote:/ $remote_dir

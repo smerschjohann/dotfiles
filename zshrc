@@ -5,7 +5,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-export PATH=$PATH:/usr/local/go/bin:~/go/bin:~/bin
+export PATH=$PATH:/usr/local/go/bin:~/go/bin:~/bin:~/.dotfiles/bin
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/.local/bin" ]; then
     PATH="$HOME/.local/bin:$PATH"
@@ -32,6 +32,8 @@ repos=(
 plugin-load $repos
 
 autoload -Uz compinit && compinit
+autoload -U bashcompinit && bashcompinit
+
 source <(kubectl completion zsh)
 complete -F __start_kubectl k
 function kubectlgetall {
